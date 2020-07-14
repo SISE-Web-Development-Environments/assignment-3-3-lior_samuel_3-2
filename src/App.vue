@@ -12,6 +12,9 @@
       <span v-else>
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
+
+      <router-link :to="{ name: 'about' }">About</router-link>
+
     </div>
     <router-view />
   </div>
@@ -38,10 +41,14 @@ export default {
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
+  //font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   min-height: 100vh;
+
+  //background-image: url("./pictures/background.jpg");//////////////////////////////////////
+  //background-size: 1800px;                           /////////////////////////////////////
 }
 
 #nav {

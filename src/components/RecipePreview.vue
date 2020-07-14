@@ -99,7 +99,7 @@ export default {
 .recipe-preview .recipe-footer .recipe-title {
   padding: 10px 10px;
   width: 100%;
-  font-size: 12pt;
+  font-size: 14pt;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
