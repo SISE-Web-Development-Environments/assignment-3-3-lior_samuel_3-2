@@ -52,11 +52,6 @@ const routes = [
     name: "notFound",
     component: NotFound,
   },
-  {
-    path: "*",
-    name: "personal",
-    component: () => import("./pages/PersonalRecipes"),
-  },
 
 ];
 
