@@ -17,9 +17,7 @@
             RecipePreview
         },
         props: {
-            recipes:{
-                type: Array
-            },
+            recipes:[],
             title: {
                 type: String,
                 required: true

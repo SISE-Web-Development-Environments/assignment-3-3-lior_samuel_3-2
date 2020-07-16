@@ -13,8 +13,8 @@
         {{ $root.store.username }}: <button @click="Logout">Logout</button>|
       </span>
 
-      <router-link :to="{ name: 'about' }">About</router-link>
-
+      <router-link :to="{ name: 'about' }">About</router-link>|
+      <router-link :to="{ name: 'favorites' }">favorites</router-link>
     </div>
     <router-view />
   </div>

@@ -13,16 +13,12 @@
       }"
       disabled
     ></RecipePreviewList>
-    <!-- <div
-      style="position: absolute;top: 70%;left: 50%;transform: translate(-50%, -50%);"
-    >
-      Centeredasdasdad
-    </div>-->
+
   </div>
 </template>
 
 <script>
-import RecipePreviewList from "../components/RecipePreviewList";
+import RecipePreviewList from "../components/RecipePreviewListRandom";
 export default {
   components: {
     RecipePreviewList

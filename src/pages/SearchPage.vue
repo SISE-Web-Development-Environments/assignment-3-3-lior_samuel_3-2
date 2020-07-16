@@ -98,10 +98,8 @@
         <div id="no_results" v-if="isArrayEmpty">
           <br />
           <br />
-          <h4>The search returned without results.</h4>
-          <img
-                  src="https://res.cloudinary.com/diax6jxzv/image/upload/v1594630470/ios-10-shrug-emoji.0_nh6aem.jpg"
-          />
+          <h4>no recipes with than name exist</h4>
+
         </div>
       </div>
       <RecipeSearchList
@@ -118,6 +116,7 @@
   import diets from "../assets/diets";
   import cuisines from "../assets/cuisines";
   import intolerances from "../assets/intolerances";
+
   export default {
     name: "Search",
     components: {

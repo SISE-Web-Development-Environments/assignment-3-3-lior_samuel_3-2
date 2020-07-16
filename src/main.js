@@ -73,6 +73,8 @@ Vue.config.productionTip = false;
 
 const shared_data = {
   username: localStorage.username,
+  // baseUrl: "https://assignment3-2.herokuapp.com",
+  baseUrl: "http://localhost:3001",
   login(username) {
     localStorage.setItem("username", username);
     this.username = username;
