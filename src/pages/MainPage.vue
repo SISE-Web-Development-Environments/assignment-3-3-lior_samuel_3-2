@@ -1,22 +1,23 @@
 
 <template>
-  <div class="containerDiv">
+  <div class="MainPageDiv">
     <b-container class="container">
-      <h1 class="title">Main Page</h1>
-      <b-row>
-        <b-col>
-          <RecipePreviewListRandom title="Randome Recipes" />
-        </b-col>
-      </b-row>
+      <div class="jumbotron">
+        <h1 class="title">Main Page</h1>
+        <b-row>
+          <b-col>
+            <RecipePreviewListRandom title="Randome Recipes" />
+          </b-col>
+        </b-row>
 
-      <b-row>
-        <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-        {{ !$root.store.username }}
-        <b-col v-if="$root.store.username">
-          <RPLUserLastWatched class="RPLUserLastWatched" />
-        </b-col>
-      </b-row>
-
+        <b-row>
+          <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
+          {{ !$root.store.username }}
+          <b-col v-if="$root.store.username">
+            <RPLUserLastWatched class="RPLUserLastWatched" />
+          </b-col>
+        </b-row>
+      </div>
     </b-container>
   </div>
 </template>
@@ -34,6 +35,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .MainPageDiv{
+    text-align: center;
+    background-size: cover;
+    background-image: url("../pictures/background.jpg");
+  }
+
 .RandomRecipes {
   margin: 10px 0 10px;
 }

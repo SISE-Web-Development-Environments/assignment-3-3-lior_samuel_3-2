@@ -1,12 +1,17 @@
 <template>
-    <div>
-        <h1 class="title">{{ this.$root.store.username }} Favorites Recipes</h1>
-        <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-        {{ !$root.store.username }}
+    <div class="favoritesPageDiv">
+        <b-container>
+            <div class="jumbotron">
+                <h1 class="title">{{ this.$root.store.username }} Favorites Recipes</h1>
+                <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
+                {{ !$root.store.username }}
 
-        <RecipePreviewList v-if="userRecipesArray.length > 0" :numberInColumn="3" :recipes="userRecipesArray"></RecipePreviewList>
-        <RecipePreviewList class="title" v-else> Liked Recipes list is empty - No Liked Recipes</RecipePreviewList>
+                <RecipePreviewList v-if="userRecipesArray.length > 0" :numberInColumn="3" :recipes="userRecipesArray"></RecipePreviewList>
+                <RecipePreviewList class="title" v-else> Liked Recipes list is empty - No Liked Recipes</RecipePreviewList>
+            </div>
+        </b-container>
     </div>
+
 </template>
 
 <script>
@@ -53,4 +58,9 @@
 </script>
 
 <style>
+    .favoritesPageDiv{
+        text-align: center;
+        background-size: cover;
+        background-image: url("../pictures/background.jpg");
+    }
 </style>

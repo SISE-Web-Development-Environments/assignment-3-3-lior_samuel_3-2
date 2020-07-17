@@ -1,12 +1,16 @@
 
 <template>
-    <div>
-        <h1 class="title">{{ this.$root.store.username }} Personal Recipes</h1>
-        <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-        {{ !$root.store.username }}
+    <div class="myRecipePageDiv">
+        <b-container>
+            <div class="jumbotron">
+                <h1 class="title">{{ this.$root.store.username }} Personal Recipes</h1>
+                <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
+                {{ !$root.store.username }}
 
-        <RecipePreviewList v-if="personalRecipes.length > 0" :numberInColumn="3" :recipes="personalRecipes" type="myRecipe"></RecipePreviewList>
-        <RecipePreviewList class="title" v-else> Personal Recipes list is empty</RecipePreviewList>
+                <RecipePreviewList v-if="personalRecipes.length > 0" :numberInColumn="3" :recipes="personalRecipes" type="myRecipe"></RecipePreviewList>
+                <RecipePreviewList class="title" v-else> Personal Recipes list is empty</RecipePreviewList>
+            </div>
+        </b-container>
     </div>
 </template>
 
@@ -43,4 +47,9 @@
 </script>
 
 <style>
+    .myRecipePageDiv{
+        text-align: center;
+        background-size: cover;
+        background-image: url("../pictures/background.jpg");
+    }
 </style>
