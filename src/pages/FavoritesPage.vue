@@ -23,7 +23,7 @@
         async created(){
             try {
                 const ResponseData = await this.axios.get(
-                    this.$root.store.baseUrl + "/users/favorites",
+                    this.$root.store.baseUrl + "/users/personalRecipes",
                 );
                 console.log(ResponseData.data);
                 if(ResponseData.data.length > 0)
