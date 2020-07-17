@@ -1,9 +1,12 @@
+
 <template>
     <div>
-        <h1 class="title">{{ this.$root.store.username }}  Recipes</h1>
+        <h1 class="title">{{ this.$root.store.username }} Personal Recipes</h1>
+        <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
+        {{ !$root.store.username }}
 
-        <RecipePreviewList v-if="myrecipes.length > 0" :numberInColumn="3" :recipes="myrecipes"></RecipePreviewList>
-        <RecipePreviewList class="title" v-else> {{ this.$root.store.username }} Recipes list is empty!!!</RecipePreviewList>
+        <RecipePreviewList v-if="personalRecipes.length > 0" :numberInColumn="3" :recipes="personalRecipes" type="myRecipe"></RecipePreviewList>
+        <RecipePreviewList class="title" v-else> Personal Recipes list is empty</RecipePreviewList>
     </div>
 </template>
 
@@ -15,12 +18,29 @@
         },
         data() {
             return {
-                myrecipes: [],
+                personalRecipes: [],
+            }
+        },
+        async created(){
+            try {
+                const responseData = await this.axios.get(
+                    this.$root.store.baseUrl + "/users/myrecipes",
+                );
+                if(responseData.status == 401)
+                {
+                    this.$root.store.logout();
+                    this.$router.push("/login");
+                }
+                else
+                {
+                    this.personalRecipes = responseData.data;
+                }
+            } catch (err) {
+                console.log(err);
             }
         }
     }
 </script>
 
-<style scoped>
-
+<style>
 </style>
