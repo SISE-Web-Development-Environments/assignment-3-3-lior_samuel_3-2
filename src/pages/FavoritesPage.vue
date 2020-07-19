@@ -19,9 +19,6 @@
                     Liked Recipes list is empty - No Liked Recipes
                 </div>
 
-<!--                <RecipePreviewList v-if="userRecipesArray.length > 0" :numberInColumn="3" :recipes="userRecipesArray"></RecipePreviewList>-->
-<!--                <RecipePreviewList class="title" v-else> Liked Recipes list is empty - No Liked Recipes</RecipePreviewList>-->
-
             </div>
         </b-container>
     </div>
@@ -46,9 +43,9 @@
                 const ResponseData = await this.axios.get(
                     "http://localhost:3000/getMyfavourite/"+this.$root.store.username,
                 );
-                console.log("----------------------------------------------")
-                console.log(ResponseData.data);
-                console.log("----------------------------------------------")
+                // console.log("----------------------------------------------")
+                // console.log(ResponseData.data);
+                // console.log("----------------------------------------------")
                 this.userRecipesArray = ResponseData.data;
                 // if(ResponseData.data.length > 0)
                 // {
