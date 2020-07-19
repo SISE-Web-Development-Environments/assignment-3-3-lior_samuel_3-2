@@ -50,24 +50,29 @@ export default {
   },
   async created() {
     try {
-      let response;
-      // response = this.$route.params.response;
 
+      let response;
       try {
-        response = await this.axios.get(
-          "https://test-for-3-2.herokuapp.com/recipes/info",
+        // "http://localhost:3000/recipies/information/"+this.$route.params.recipeId+"/"+this.$root.store.username,
+                response = await this.axios.get(
+                "http://localhost:3000/recipies/information/"+this.$route.params.recipeId+"/"+this.$root.store.username,
           {
-            params: { id: this.$route.params.recipeId }
+            params: { id: this.$route.params.recipeId, username: this.$root.store.username }
           }
         );
-
+        //console.log("response +++++++++++++", response.data);
+        // console.log("id============", response.data.id);
+        // console.log("title============", response.data.title);
         // console.log("response.status", response.status);
+
         if (response.status !== 200) this.$router.replace("/NotFound");
+
       } catch (error) {
         console.log("error.response.status", error.response.status);
         this.$router.replace("/NotFound");
         return;
       }
+
 
       let {
         analyzedInstructions,
@@ -77,7 +82,7 @@ export default {
         readyInMinutes,
         image,
         title
-      } = response.data.recipe;
+      } = response.data;
 
       let _instructions = analyzedInstructions
         .map((fstep) => {
@@ -98,6 +103,11 @@ export default {
       };
 
       this.recipe = _recipe;
+
+      // console.log("**********title: "+this.recipe.title);
+      // console.log("**********instructions :"+this.recipe.instructions);
+      // console.log("**********analyzedInstructions: "+this.recipe.analyzedInstructions);
+
     } catch (error) {
       console.log(error);
     }

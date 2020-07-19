@@ -1,27 +1,27 @@
 <template>
-  <router-link
-    :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
-    class="recipe-preview"
-  >
-    <div class="recipe-body">
-      <img v-if="image_load" :src="recipe.image" class="recipe-image" />
-    </div>
+    <router-link
+            :to="{ name: 'recipe', params: { recipeId: recipe.id } }"
+            class="recipe-preview"
+    >
+        <div class="recipe-body">
+            <img v-if="image_load" :src="recipe.image" class="recipe-image" />
+        </div>
 
-    <div class="recipe-footer">
-      <div :title="recipe.title" class="recipe-title">
-        {{ recipe.title }}
-      </div>
-      <ul class="recipe-overview">
-        <li >{{ recipe.readyInMinutes }} minutes</li>
-        <li >{{ recipe.aggregateLikes }} likes</li>
-      </ul>
-        <ul class="recipe-overview">
-            <li v-if="this.recipe.vegetarian">vegetarian</li>
-            <li v-if="this.recipe.vegan"> vegan</li>
-            <li v-if="this.recipe.glutenFree"> glutenFree</li>
-        </ul>
-    </div>
-  </router-link>
+        <div class="recipe-footer">
+            <div :title="recipe.title" class="recipe-title">
+                {{ recipe.title }}
+            </div>
+            <ul class="recipe-overview">
+                <li >{{ recipe.readyInMinutes }} minutes</li>
+                <li >{{ recipe.aggregateLikes }} likes</li>
+            </ul>
+            <ul class="recipe-overview">
+                <li v-if="this.recipe.vegetarian">vegetarian</li>
+                <li v-if="this.recipe.vegan"> vegan</li>
+                <li v-if="this.recipe.glutenFree"> glutenFree</li>
+            </ul>
+        </div>
+    </router-link>
 </template>
 
 <script>
@@ -30,15 +30,6 @@ export default {
     this.axios.get(this.recipe.image).then((i) => {
       this.image_load = true;
     });
-    // this.axios.get(this.recipe.vegetarian).then((i) => {
-    //   this.vegetarianFlag = true;
-    // });
-    // this.axios.get(this.recipe.vegan).then((i) => {
-    //   this.veganFlag = true;
-    // });
-    // this.axios.get(this.recipe.glutenFree).then((i) => {
-    //   this.glutenFreeFlag = true;
-    // });
 
   },
   data() {
@@ -49,9 +40,30 @@ export default {
       glutenFreeFlag: false,
     };
   },
+  methods: {
+    toRecipeLink(){
+      if(this.type == "normal")
+      {
+        return { name: 'recipe', params: { mode:"normal", recipeId: this.recipe.id } };
+      }
+      else if(this.type == "family")
+      {
+        return { name: 'recipe', params: { mode:"family", recipeId: this.recipe.id } };
+      }
+      else
+      {
+        return { name: 'recipe', params: { mode:"myRecipe", recipeId: this.recipe.id } };
+      }
+    }
+  },
   props: {
     recipe: {
       type: Object,
+      required: true
+    },
+    type: {
+      //can be normal, family or myRecipe. Defines the type of the recipe that is being previewed. Mostly used for routing to the right page
+      type: String,
       required: true
     }
 

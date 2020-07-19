@@ -43,9 +43,9 @@
                     );
 
                     const recipes = response.data;
-                    console.log("------------------");
+                    console.log("+++++++++++++++++++++++++");
                     console.log(recipes);
-                    console.log("------------------");
+                    console.log("+++++++++++++++++++++++++");
                     this.recipes = [];
                     this.recipes.push(...recipes);
                 } catch (error) {
