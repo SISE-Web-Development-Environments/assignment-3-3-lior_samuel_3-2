@@ -4,19 +4,19 @@
     <b-container class="container">
       <div class="jumbotron">
         <h1 class="title">Main Page</h1>
-        <b-row>
-          <b-col>
-            <RecipePreviewListRandom title="Randome Recipes" />
-          </b-col>
-        </b-row>
 
         <b-row>
+          <b-col>
+            <RecipePreviewListRandom title="Explore these recipes" />
+          </b-col>
+
           <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
           {{ !$root.store.username }}
           <b-col v-if="$root.store.username">
-            <RPLUserLastWatched class="RPLUserLastWatched" />
+            <RPLUserLastWatched  title="Last watched recipes" class="RPLUserLastWatched" />
           </b-col>
         </b-row>
+
       </div>
     </b-container>
   </div>
@@ -29,7 +29,7 @@ import RPLUserLastWatched from "../components/RPLUserLastWatched";
 export default {
   components: {
     RecipePreviewListRandom,
-    //RPLUserLastWatched
+    RPLUserLastWatched
   }
 };
 </script>

@@ -4,11 +4,12 @@
             {{ title }}:
             <slot></slot>
         </h3>
-        <b-row>
+        <b-col>
             <b-col v-for="r in recipes" :key="r.id">
                 <RecipePreview class="recipePreview" :recipe="r" />
+                <br>
             </b-col>
-        </b-row>
+        </b-col>
     </b-container>
 </template>
 
@@ -42,6 +43,9 @@
                     );
 
                     const recipes = response.data;
+                    console.log("------------------");
+                    console.log(recipes);
+                    console.log("------------------");
                     this.recipes = [];
                     this.recipes.push(...recipes);
                 } catch (error) {

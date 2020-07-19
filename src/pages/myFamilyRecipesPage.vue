@@ -11,7 +11,7 @@
                     <b-container>
                         <b-row>
                             <b-col v-for="r in personalRecipes" :key="r.id">
-                                <RecipePreview class="recipePreview" :recipe="r" />
+                                <RecipePreviewFamily class="RecipePreviewFamily" :recipe="r" />
                             </b-col>
                         </b-row>
                     </b-container>
@@ -27,10 +27,10 @@
 
 <script>
 
-    import RecipePreview from "../components/RecipePreview";
+    import RecipePreviewFamily from "../components/RecipePreviewFamily";
     export default {
         components: {
-            RecipePreview,
+            RecipePreviewFamily,
         },
         data() {
             return {
@@ -51,9 +51,9 @@
                 else
                 {
                     this.personalRecipes = responseData.data;
-                    // console.log("----------------------------------------------")
-                    // console.log(responseData.data);
-                    // console.log("----------------------------------------------")
+                    console.log("----------------------------------------------")
+                    console.log(responseData.data);
+                    console.log("----------------------------------------------")
                 }
             } catch (err) {
                 console.log(err);

@@ -7,18 +7,28 @@
                 <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
                 {{ !$root.store.username }}
 
-                <RecipePreviewList v-if="personalRecipes.length > 0" :numberInColumn="3" :recipes="personalRecipes" type="myRecipe"></RecipePreviewList>
-                <RecipePreviewList class="title" v-else> Personal Recipes list is empty</RecipePreviewList>
+                <div v-if="personalRecipes.length > 0">
+                    <b-container>
+                        <b-col>
+                            <b-col v-for="r in personalRecipes" :key="r.id">
+                                <RecipePreview class="recipePreview" :recipe="r" />
+                            </b-col>
+                        </b-col>
+                    </b-container>
+                </div>
+                <div v-else>
+                    family Recipes list is empty - No family Recipes
+                </div>
             </div>
         </b-container>
     </div>
 </template>
 
 <script>
-    import RecipePreviewList from "../components/RecipePreviewList";
+    import RecipePreview from "../components/RecipePreview";
     export default {
         components: {
-            RecipePreviewList
+            RecipePreview
         },
         data() {
             return {
@@ -28,7 +38,7 @@
         async created(){
             try {
                 const responseData = await this.axios.get(
-                    this.$root.store.baseUrl + "/users/myrecipes",
+                    "http://localhost:3000/personalRecipes/"+this.$root.store.username,
                 );
                 if(responseData.status == 401)
                 {
@@ -38,6 +48,9 @@
                 else
                 {
                     this.personalRecipes = responseData.data;
+                    console.log("----------------------------------------------")
+                    console.log(responseData.data);
+                    console.log("----------------------------------------------")
                 }
             } catch (err) {
                 console.log(err);

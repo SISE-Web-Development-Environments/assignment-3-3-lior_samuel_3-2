@@ -8,11 +8,11 @@
 
                 <div v-if="userRecipesArray.length > 0">
                     <b-container>
-                        <b-row>
+                        <b-col>
                             <b-col v-for="r in userRecipesArray" :key="r.id">
                                 <RecipePreview class="recipePreview" :recipe="r" />
                             </b-col>
-                        </b-row>
+                        </b-col>
                     </b-container>
                 </div>
                 <div v-else>
