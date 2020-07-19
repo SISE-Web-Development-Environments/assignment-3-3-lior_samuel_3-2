@@ -36,11 +36,14 @@
         methods: {
             async updateRecipes() {
                 try {
-                    // "https://test-for-3-2.herokuapp.com/recipes/random" "https://test-for-3-2.herokuapp.com/profile/favorites"
                     const response = await this.axios.get(
-                        "https://test-for-3-2.herokuapp.com/recipes/random",
+                        "http://localhost:3000/getMyfavourite/"+this.$root.store.username,
                         { withCredentials: true }
                     );
+                    console.log("--------------------------");
+                    console.log(response);
+                    console.log("--------------------------");
+
                     const recipes = response.data.recipes;
                     this.recipes = [];
                     this.recipes.push(...recipes);

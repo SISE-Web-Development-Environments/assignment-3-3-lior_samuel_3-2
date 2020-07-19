@@ -29,7 +29,7 @@ import RPLUserLastWatched from "../components/RPLUserLastWatched";
 export default {
   components: {
     RecipePreviewListRandom,
-    RPLUserLastWatched
+    //RPLUserLastWatched
   }
 };
 </script>

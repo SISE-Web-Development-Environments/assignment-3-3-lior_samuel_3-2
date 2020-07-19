@@ -21,7 +21,8 @@
                         which was build in three separate stages:</h5>
                     <ul>
                         <li>Creating API: in charge of establishing communication between the Server and Clients</li>
-                        <ul text="Creating server side using:">
+                        <li>Creating server side using:</li>
+                        <ul>
                             <li>axios - using the external "spoonacular" API for recipes database</li>
                             <li>NODE js with 'express' </li>
                             <li>mssql</li>

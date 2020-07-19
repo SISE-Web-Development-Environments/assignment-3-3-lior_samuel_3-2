@@ -37,10 +37,11 @@
             async updateRecipes() {
                 try {
                     const response = await this.axios.get(
-                        "https://test-for-3-2.herokuapp.com/recipes/random"
+                        //"https://test-for-3-2.herokuapp.com/recipes/random"
+                        "http://localhost:3000/randomRecipes"
                     );
 
-                    const recipes = response.data.recipes;
+                    const recipes = response.data;
                     this.recipes = [];
                     this.recipes.push(...recipes);
                 } catch (error) {
