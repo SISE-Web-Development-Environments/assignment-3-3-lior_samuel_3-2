@@ -45,7 +45,7 @@
       >
       <div class="mt-2">
         Do not have an account yet?
-        <router-link to="register"> Register in here</router-link>
+        <router-link to="register"> Register Here</router-link>
       </div>
     </b-form>
     <b-alert
@@ -93,14 +93,17 @@ export default {
     },
     async Login() {
       try {
+        this.axios.defaults.withCredentials=true;
         const response = await this.axios.post(
-          "https://test-for-3-2.herokuapp.com/user/Login",
+          //"https://test-for-3-2.herokuapp.com/user/Login",
+                //"http://localhost:3000/Login/"+this.$root.store.username,
+                "http://localhost:3000/Login",
           {
             username: this.form.username,
             password: this.form.password
           }
         );
-        // console.log(response);
+         //console.log(response);
         // this.$root.loggedIn = true;
         console.log(this.$root.store.login);
         this.$root.store.login(this.form.username);
@@ -127,5 +130,6 @@ export default {
 <style lang="scss" scoped>
 .container {
   max-width: 400px;
+  background: blanchedalmond;
 }
 </style>
