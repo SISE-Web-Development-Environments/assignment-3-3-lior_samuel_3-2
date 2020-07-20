@@ -1,3 +1,269 @@
+<template>
+  <div class="container">
+    <h1 class="title">Search Page</h1>
+    <b-form @submit.prevent="searchRecipes" @reset.prevent="onReset">
+      <div class="form-group">
+        <input
+                v-model="form.query"
+                type="text"
+                class="form-control"
+                name="query"
+                id="query_input"
+                aria-describedby="helpId"
+                placeholder="Enter key words here"
+        />
+      </div>
+      <div class="form-group">
+        <label>Cuisine</label>
+        <b-form-select
+                class="form-control"
+                name="Cuisine"
+                id="cuisine"
+                v-model="form.cuisine"
+                :options="cuisines"
+        >
+        </b-form-select>
+      </div>
+      <div class="form-group">
+        <label >Diet</label>
+        <b-form-select
+                class="form-control"
+                name="Diet"
+                id="diet"
+                v-model="form.diet"
+                :options="diets"
+        >
+        </b-form-select>
+      </div>
+      <div class="form-group">
+        <label >Intolerance</label>
+        <b-form-select
+                class="form-control"
+                name="Intolerance"
+                id="intolerance"
+                v-model="form.intolerance"
+                :options="intolerances"
+        >
+        </b-form-select>
+      </div>
+      <div class="form-group">
+        <label >Number Of results</label>
+        <b-form-select
+                class="form-control"
+                name="Cuisine"
+                id="number"
+                v-model="form.number"
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+        </b-form-select>
+      </div>
+      <!-- :disabled="isDisabled"-->
+      <b-button type="reset" variant="danger">Reset</b-button>
+      <b-button
+              type="submit"
+              variant="primary"
+              class="ml-5 w-30"
+              :disabled="isDisabled"
+      >Search</b-button
+      >
+    </b-form>
+    <br />
+    <b-row>
+      <b-col>
+        <div>
+          <div>
+            <div id="results" v-if="!isArrayEmpty">
+              <h3>Search Results:</h3>
+              <label>Sort by: </label>&nbsp;
+              <select name="sorts" id="sort" @change="sort($event)">
+                <option selected disabled value="">Select option</option>
+                <option value="likes">Likes</option>
+                <option value="time">Time</option>
+              </select>
+            </div>
+            <div id="no_results" v-if="isArrayEmpty">
+              <br />
+              <br />
+              <h4>Sorry but we didn't find the requested recipes.</h4>
+              <img
+                      src="https://res.cloudinary.com/diax6jxzv/image/upload/v1594630470/ios-10-shrug-emoji.0_nh6aem.jpg"
+              />
+            </div>
+          </div>
+          <RecipeSearchList
+                  title="Search Results"
+                  class="Search Results"
+                  :recipes="this.recipes"
+          />
+        </div>
+      </b-col>
+      <b-col>
+        <h3>Last Search Details:</h3>
+        <!--<p v-bind="pastQuery">{{ $root.store.pastQuery }}</p>-->
+        <p>
+          <strong>Past Query: </strong> {{ this.$root.store.pastQuery }}<br/>
+          <strong>Diet: </strong> {{ this.$root.store.diet }}<br/>
+          <strong>Cuisine: </strong> {{ this.$root.store.cuisine }}<br/>
+          <strong>intolerance: </strong> {{ this.$root.store.intolerance }}<br/>
+        </p>
+        <b-row v-for="r in this.$root.store.recipesSearch" :key="r.id">
+          <RecipePreview class="recipePreview" :recipe="r" />
+        </b-row>
+      </b-col>
+    </b-row>
+  </div>
+</template>
+
+<script>
+  import RecipeSearchList from "../components/RecipeSearchList";
+  import diets from "../assets/diets";
+  import cuisines from "../assets/cuisines";
+  import intolerances from "../assets/intolerances";
+  import RecipePreview from "../components/RecipePreview";
+  export default {
+    name: "Search",
+    components: {
+      RecipeSearchList,
+      RecipePreview,
+    },
+    data() {
+      return {
+        form: {
+          query: "",
+          cuisine: null,
+          diet: null,
+          intolerance: null,
+          number: 5,
+        },
+        recipes: [],
+        cuisines: [{ value: null, text: "", disabled: true }],
+        diets: [{ value: null, text: "", disabled: true }],
+        intolerances: [{ value: null, text: "", disabled: true }],
+        pressed: false,
+      };
+    },
+    mounted() {
+      this.diets.push(...diets);
+      this.cuisines.push(...cuisines);
+      this.intolerances.push(...intolerances);
+    },
+    computed: {
+      isDisabled() {
+        if (
+                this.form.query === "" ||
+                this.form.query === null ||
+                this.form.query.value === 0
+        ) {
+          return true;
+        }
+        return false;
+      },
+      sortLikes() {
+        function compare(a, b) {
+          if (a.aggregateLikes < b.aggregateLikes) return 1;
+          if (a.aggregateLikes > b.aggregateLikes) return -1;
+          return 0;
+        }
+        console.log(this.recipes);
+        return [...this.recipes].sort(compare);
+      },
+      sortTime() {
+        function compare(a, b) {
+          if (a.readyInMinutes < b.readyInMinutes) return -1;
+          if (a.readyInMinutes > b.readyInMinutes) return 1;
+          return 0;
+        }
+        console.log(this.recipes);
+        return [...this.recipes].sort(compare);
+      },
+      isArrayEmpty() {
+        return (
+                Array.isArray(this.recipes) &&
+                !this.recipes.length &&
+                this.pressed == true
+        );
+      },
+    },
+    methods: {
+      async searchRecipes() {
+        try {
+          this.axios.defaults.withCredentials=true;
+          const response = await this.axios.get(
+                  /*"http://localhost:3000/recipes/search/" +
+                  this.form.query +
+                  "/amount/" +
+                  this.form.number, { withCredentials: true },*/
+                  "http://localhost:3000/searchRecipes",
+                  /*{
+                    diet: this.form.diet,
+                    cuisine: this.form.cuisine,
+                    intolerance: this.form.intolerance,
+                    recipesNameSearch: this.form.query,*/
+                  {
+                    params: {
+                      diet: this.form.diet,
+                      cuisine: this.form.cuisine,
+                      intolerance: this.form.intolerance,
+                      recipesNameSearch: this.form.query,
+                    },
+                  },
+                  //{ withCredentials: true }
+          );
+          const recipes = response.data;
+          this.recipes = [];
+          this.recipes.push(...recipes);
+          console.log(recipes);
+          if ($cookies.get("session")) {
+            this.$root.store.saveSearch(
+                    this.form.query,
+                    this.recipes,
+                    this.form.diet,
+                    this.form.cuisine,
+                    this.form.intolerance,
+                    //this.form.recipesNameSearch,
+            );
+          }
+          this.pressed = true;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+      onReset() {
+        this.form = {
+          query: "",
+          cuisine: null,
+          diet: null,
+          intolerances: null,
+        };
+      },
+      sort(sortType) {
+        if (sortType.target.value === "time") {
+          this.recipes = this.sortTime;
+        }
+        if (sortType.target.value === "likes") {
+          this.recipes = this.sortLikes;
+        }
+      },
+    },
+  };
+</script>
+
+<style lang="scss" scoped>
+  .searchPageDiv{
+    text-align: center;
+    background-size: cover;
+    //background-color: black;
+    background-image: url("../pictures/background.jpg");
+  }
+  #queryInput {
+    border-radius: 50px;
+  }
+
+</style>
+
+<!--
 
 <template>
   <div class="searchPageDiv">
@@ -245,3 +511,4 @@
   }
 </style>
 
+-->

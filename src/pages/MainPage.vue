@@ -11,7 +11,7 @@
           </b-col>
 
           <router-link v-if="!$root.store.username" to="/login" tag="button">You need to Login to vue this</router-link>
-          {{ !$root.store.username }}
+<!--          {{ !$root.store.username }}-->
           <b-col v-if="$root.store.username">
             <RPLUserLastWatched  title="Last watched recipes" class="RPLUserLastWatched" />
           </b-col>
