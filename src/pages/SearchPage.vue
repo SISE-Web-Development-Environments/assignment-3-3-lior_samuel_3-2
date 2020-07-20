@@ -66,6 +66,7 @@
               variant="primary"
               class="ml-5 w-30"
               :disabled="isDisabled"
+              v-on:click="updateLastSearchDetails();"
       >Search</b-button
       >
     </b-form>
@@ -101,16 +102,16 @@
       </b-col>
       <b-col>
         <h3>Last Search Details:</h3>
-        <!--<p v-bind="pastQuery">{{ $root.store.pastQuery }}</p>-->
         <p>
-          <strong>Past Query: </strong> {{ this.$root.store.pastQuery }}<br/>
-          <strong>Diet: </strong> {{ this.$root.store.diet }}<br/>
-          <strong>Cuisine: </strong> {{ this.$root.store.cuisine }}<br/>
-          <strong>intolerance: </strong> {{ this.$root.store.intolerance }}<br/>
+          <strong>Past Query: </strong> {{ this.lastSearch }}<br/>
+          <strong>Diet: </strong> {{ this.lastDiet }}<br/>
+          <strong>Cuisine: </strong> {{ this.lastCuisine }}<br/>
+          <strong>intolerance: </strong> {{ this.lastIntolerance }}<br/>
         </p>
-        <b-row v-for="r in this.$root.store.recipesSearch" :key="r.id">
+        <b-col v-for="r in this.lastRecipesResolte" :key="r.id">
           <RecipePreview class="recipePreview" :recipe="r" />
-        </b-row>
+        </b-col>
+
       </b-col>
     </b-row>
   </div>
@@ -142,12 +143,31 @@
         diets: [{ value: null, text: "", disabled: true }],
         intolerances: [{ value: null, text: "", disabled: true }],
         pressed: false,
+
+        currentSearch: null,
+        currentDiet: null,
+        currentCuisine: null,
+        currentIntolerance: null,
+
+        lastSearch: null,
+        lastDiet: null,
+        lastCuisine: null,
+        lastIntolerance: null,
+
+        // lastRecipesResolte: null,///////////////////////////////////////////////////////////////////
+        // resetlastRecipesResolte:null,
       };
     },
     mounted() {
       this.diets.push(...diets);
       this.cuisines.push(...cuisines);
       this.intolerances.push(...intolerances);
+
+      this.lastSearch = localStorage.getItem("lastSearch");
+      this.lastDiet = localStorage.getItem("lastDiet");
+      this.lastCuisine = localStorage.getItem("lastCuisine");
+      this.lastIntolerance = localStorage.getItem("lastIntolerance");
+      //this.lastRecipesResolte = localStorage.getItem("lastRecipesResolte");///////////////////////////////////
     },
     computed: {
       isDisabled() {
@@ -190,31 +210,57 @@
       async searchRecipes() {
         try {
           this.axios.defaults.withCredentials=true;
+
+          this.currentSearch = this.form.query;
+          this.currentDiet = this.form.diet;
+          this.currentCuisine = this.form.cuisine;
+          this.currentIntolerance = this.form.intolerance;
+
+          localStorage.setItem("lastSearch", this.currentSearch);
+          localStorage.setItem("lastDiet", this.currentDiet);
+          localStorage.setItem("lastCuisine", this.currentCuisine);
+          localStorage.setItem("lastIntolerance", this.currentIntolerance);
+
+          // localStorage.setItem("lastRecipesResolte", this.resetlastRecipesResolte);////////////////////////////////////////
+          // localStorage.setItem("lastRecipesResolte", this.recipes);////////////////////////////////////////
+
+          // this.lastSearch = localStorage.getItem("lastSearch");
+          // this.lastDiet = localStorage.getItem("lastDiet");
+          // this.lastCuisine = localStorage.getItem("lastCuisine");
+          // this.lastIntolerance = localStorage.getItem("lastIntolerance");
+          // console.log("lastSearch: "+this.lastSearch)
+          // console.log("lastDiet: "+this.lastDiet)
+          // console.log("lastCuisine: "+this.lastCuisine)
+          // console.log("lastIntolerance: "+this.lastIntolerance)
+
           const response = await this.axios.get(
                   /*"http://localhost:3000/recipes/search/" +
                   this.form.query +
                   "/amount/" +
                   this.form.number, { withCredentials: true },*/
-                  "http://localhost:3000/searchRecipes",
-                  /*{
-                    diet: this.form.diet,
-                    cuisine: this.form.cuisine,
-                    intolerance: this.form.intolerance,
-                    recipesNameSearch: this.form.query,*/
+                  "http://localhost:3000/searchRecipes"+
+                  "/"+this.form.diet+
+                  "/"+this.form.cuisine+
+                  "/"+this.form.intolerance+
+                  "/"+this.form.query+
+                  "/"+this.form.number,
                   {
                     params: {
                       diet: this.form.diet,
                       cuisine: this.form.cuisine,
                       intolerance: this.form.intolerance,
                       recipesNameSearch: this.form.query,
+                      number: this.form.number,
                     },
                   },
-                  //{ withCredentials: true }
           );
           const recipes = response.data;
           this.recipes = [];
           this.recipes.push(...recipes);
-          console.log(recipes);
+          console.log("---------------------------------")
+          console.log(recipes)
+          console.log("---------------------------------")
+
           if ($cookies.get("session")) {
             this.$root.store.saveSearch(
                     this.form.query,
@@ -245,6 +291,13 @@
         if (sortType.target.value === "likes") {
           this.recipes = this.sortLikes;
         }
+      },
+      updateLastSearchDetails() {
+        this.lastSearch = localStorage.getItem("lastSearch");
+        this.lastDiet = localStorage.getItem("lastDiet");
+        this.lastCuisine = localStorage.getItem("lastCuisine");
+        this.lastIntolerance = localStorage.getItem("lastIntolerance");
+        //this.lastRecipesResolte = localStorage.getItem("lastRecipesResolte");///////////////////////////////////
       },
     },
   };

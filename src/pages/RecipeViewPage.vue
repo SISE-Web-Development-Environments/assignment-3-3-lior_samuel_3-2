@@ -55,7 +55,9 @@ export default {
       try {
         // "http://localhost:3000/recipies/information/"+this.$route.params.recipeId+"/"+this.$root.store.username,
                 response = await this.axios.get(
-                "http://localhost:3000/recipies/information/"+this.$route.params.recipeId+"/"+this.$root.store.username,
+                "http://localhost:3000/recipies/information/"
+                        +this.$route.params.recipeId+
+                        "/"+this.$root.store.username,
           {
             params: { id: this.$route.params.recipeId, username: this.$root.store.username }
           }

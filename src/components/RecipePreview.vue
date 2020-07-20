@@ -4,7 +4,7 @@
             class="recipe-preview"
     >
         <div class="recipe-body">
-            <img v-if="image_load" :src="recipe.image" class="recipe-image" />
+            <img  :src="recipe.image" class="recipe-image" />
         </div>
 
         <div class="recipe-footer">
