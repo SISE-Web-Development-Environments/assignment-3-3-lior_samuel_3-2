@@ -51,9 +51,9 @@
                 else
                 {
                     this.personalRecipes = responseData.data;
-                    console.log("----------------------------------------------")
-                    console.log(responseData.data);
-                    console.log("----------------------------------------------")
+                    // console.log("----------------------------------------------")
+                    // console.log(responseData.data);
+                    // console.log("----------------------------------------------")
                 }
             } catch (err) {
                 console.log(err);
