@@ -1,4 +1,3 @@
-
 <template>
     <div class="myRecipePageDiv">
         <b-container>
@@ -17,12 +16,14 @@
                     </b-container>
                 </div>
                 <div v-else>
-                    family Recipes list is empty - No family Recipes
+                    personal Recipes list is empty - No personal Recipes
                 </div>
+
             </div>
         </b-container>
     </div>
 </template>
+
 
 <script>
     import RecipePreview from "../components/RecipePreview";
@@ -48,9 +49,9 @@
                 else
                 {
                     this.personalRecipes = responseData.data;
-                    console.log("----------------------------------------------")
-                    console.log(responseData.data);
-                    console.log("----------------------------------------------")
+                    // console.log("----------------------------------------------")
+                    // console.log(responseData.data);
+                    // console.log("----------------------------------------------")
                 }
             } catch (err) {
                 console.log(err);

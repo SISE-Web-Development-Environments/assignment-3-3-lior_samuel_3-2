@@ -1,4 +1,3 @@
-
 <template>
     <div class="familyPageDiv">
         <b-container>
@@ -9,11 +8,11 @@
 
                 <div v-if="personalRecipes.length > 0">
                     <b-container>
-                        <b-row>
+                        <b-col>
                             <b-col v-for="r in personalRecipes" :key="r.id">
                                 <RecipePreviewFamily class="RecipePreviewFamily" :recipe="r" />
                             </b-col>
-                        </b-row>
+                        </b-col>
                     </b-container>
                 </div>
                 <div v-else>

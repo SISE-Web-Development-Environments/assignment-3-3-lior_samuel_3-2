@@ -190,7 +190,7 @@
       async Recipessearch() {
         try {
           const response = await this.axios.get(
-                  "https://assignment3-2-tomer-itai.herokuapp.com/recipes/search/" +
+                  "http://localhost:3000/searchRecipes" +
                   this.formInfo.query +
                   "/amount/" +
                   this.formInfo.resultNum,

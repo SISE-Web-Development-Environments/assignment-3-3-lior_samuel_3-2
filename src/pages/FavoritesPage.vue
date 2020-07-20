@@ -26,11 +26,9 @@
 </template>
 
 <script>
-    import RecipePreviewList from "../components/RecipePreviewList";
     import RecipePreview from "../components/RecipePreview";
     export default {
         components: {
-            //RecipePreviewList
             RecipePreview
         },
         data() {

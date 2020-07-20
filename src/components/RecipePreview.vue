@@ -41,55 +41,14 @@ export default {
     };
   },
   methods: {
-    toRecipeLink(){
-      if(this.type == "normal")
-      {
-        return { name: 'recipe', params: { mode:"normal", recipeId: this.recipe.id } };
-      }
-      else if(this.type == "family")
-      {
-        return { name: 'recipe', params: { mode:"family", recipeId: this.recipe.id } };
-      }
-      else
-      {
-        return { name: 'recipe', params: { mode:"myRecipe", recipeId: this.recipe.id } };
-      }
-    }
+
   },
   props: {
     recipe: {
       type: Object,
       required: true
     },
-    type: {
-      //can be normal, family or myRecipe. Defines the type of the recipe that is being previewed. Mostly used for routing to the right page
-      type: String,
-      required: true
-    }
 
-    // id: {
-    //   type: Number,
-    //   required: true
-    // },
-    // title: {
-    //   type: String,
-    //   required: true
-    // },
-    // readyInMinutes: {
-    //   type: Number,
-    //   required: true
-    // },
-    // image: {
-    //   type: String,
-    //   required: true
-    // },
-    // aggregateLikes: {
-    //   type: Number,
-    //   required: false,
-    //   default() {
-    //     return undefined;
-    //   }
-    // }
   }
 };
 </script>
