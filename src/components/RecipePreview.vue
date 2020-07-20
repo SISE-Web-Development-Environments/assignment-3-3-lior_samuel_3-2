@@ -12,13 +12,17 @@
                 {{ recipe.title }}
             </div>
             <ul class="recipe-overview">
-                <li >{{ recipe.readyInMinutes }} minutes</li>
-                <li >{{ recipe.aggregateLikes }} likes</li>
+                <li > <img class="imageSign" src="../assets/clock_images.jpg"/> {{ recipe.readyInMinutes }} minutes</li>
+                <li > <img class="imageSign" src="../assets/Like-Button-PNG.png"/> {{ recipe.aggregateLikes }} likes</li>
             </ul>
             <ul class="recipe-overview">
-                <li v-if="this.recipe.vegetarian">vegetarian</li>
-                <li v-if="this.recipe.vegan"> vegan</li>
-                <li v-if="this.recipe.glutenFree"> glutenFree</li>
+                <li v-if="this.recipe.vegetarian"> <img class="imageSign" src="../assets/vegetarian-image.png"/>vegetarian</li>
+                <li v-if="this.recipe.vegan"> <img class="imageSign" src="../assets/vegan_image.jpg"/> vegan</li>
+                <li v-if="this.recipe.glutenFree"> <img class="imageSign" src="../assets/gluten-free-image.png"/> glutenFree</li>
+
+                <li v-if="this.isWatched"> <img class="imageSign" src="../assets/eye_image.png"/> seem</li>
+                <li v-if="!this.isWatched"> <img class="imageSign" src="../assets/not_seen_image.png"/> not Seen</li>
+
             </ul>
         </div>
     </router-link>
@@ -35,13 +39,39 @@ export default {
   data() {
     return {
       image_load: false,
-      vegetarianFlag: false,
-      veganFlag: false,
-      glutenFreeFlag: false,
+      isWatched: false,
+      isLiked: false,
     };
   },
   methods: {
+      async searchRecipes() {
+          try {
+              this.axios.defaults.withCredentials=true;
 
+              const response = await this.axios.get(
+                  "http://localhost:3000/isWatched"+
+                  +this.$root.store.username+
+                  "/"+this.recipe.id,
+                  {
+                      params: {
+                          username: this.$root.store.username,
+                          id: this.recipe.id,
+                      },
+                  },
+              );
+              console.log("=====================")
+              console.log("anser: " )
+              console.log("=====================")
+              if(response.data==1){
+                  this.isWatched=true;
+              }
+              else{
+                  this.isWatched=false;
+              }
+          } catch (error) {
+              console.log(error);
+          }
+      },
   },
   props: {
     recipe: {
@@ -54,6 +84,11 @@ export default {
 </script>
 
 <style scoped>
+    .imageSign{
+        height: 25px;
+        width: auto;
+        margin-top: 10px;
+    }
 .recipe-preview {
   display: inline-block;
   width: 90%;
